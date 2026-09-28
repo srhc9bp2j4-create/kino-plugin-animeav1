@@ -10,5 +10,6 @@
     "animeav1.com",
     "cdn.animeav1.com"
   ],
+  "capabilities": ["home", "browse", "search", "detail", "streams"],
   "permissions": []
 }
