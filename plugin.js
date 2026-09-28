@@ -79,7 +79,7 @@ export async function meta({ ref }) {
 
 // ─── STREAMS ─────────────────────────────────────────────────────────────────
 // Devuelve las URLs de reproducción para un episodio
-export async function streams({ ref }) {
+export async function stream({ ref }) {
   // ref = "slug-anime/numero-episodio"
   const url = `${BASE_URL}/media/${ref}`;
   const html = await kino.fetch(url).then(r => r.text());
