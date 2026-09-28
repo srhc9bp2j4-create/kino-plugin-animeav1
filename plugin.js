@@ -68,9 +68,9 @@ export async function search({ query }) {
   return parseCatalog(html);
 }
 
-// ─── DETAIL ──────────────────────────────────────────────────────────────────
+// ─── META (antes "detail") ───────────────────────────────────────────────────
 // Devuelve info de un anime + lista de episodios
-export async function detail({ ref }) {
+export async function meta({ ref }) {
   // ref = slug del anime, ej: "one-piece"
   const url = `${BASE_URL}/media/${ref}`;
   const html = await kino.fetch(url).then(r => r.text());
@@ -93,11 +93,6 @@ export async function streams({ ref }) {
 function parseRecentEpisodes(html) {
   const items = [];
   // Episodios recientes: cada entrada tiene thumbnail, título y link de episodio
-  const episodePattern = /href="(\/media\/([^"]+)\/(\d+))"[^>]*>[\s\S]*?<img[^>]+src="([^"]+)"[\s\S]*?<\/a>/g;
-  const titlePattern = /Ver\s+(.+?)\s+\d+/;
-
-  let m;
-  const regex = /thumbnails\/\d+\.jpg/g;
   const thumbMatches = html.match(/cdn\.animeav1\.com\/thumbnails\/(\d+)\.jpg/g) || [];
   const linkMatches = html.match(/href="\/media\/([^"\/]+)\/(\d+)"/g) || [];
   const titleMatches = html.match(/Ver\s([^<]+?)\s-\s*\d+<\/a>/g) || [];
@@ -158,11 +153,9 @@ function parseRecentAnimes(html) {
 
 function parseCatalog(html) {
   const items = [];
-  // Entradas del catálogo: poster + título + link
-  const entryRegex = /href="\/media\/([^"\/]+)"[^>]*>[\s\S]{0,500}?<img[^>]+src="([^"]+)"[\s\S]{0,300}?<\/a>/g;
   let m;
 
-  // Método alternativo más robusto: buscar slugs y covers
+  // Buscar slugs únicos
   const slugs = [];
   const slugRegex = /href="\/media\/([a-z0-9\-]+)"(?!\/)/g;
   while ((m = slugRegex.exec(html)) !== null) {
