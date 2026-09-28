@@ -77,7 +77,7 @@ export async function meta({ ref }) {
   return parseDetail(html, ref);
 }
 
-// ─── STREAMS ─────────────────────────────────────────────────────────────────
+// ─── STREAM ──────────────────────────────────────────────────────────────────
 // Devuelve las URLs de reproducción para un episodio
 export async function stream({ ref }) {
   // ref = "slug-anime/numero-episodio"
